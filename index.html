@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noel HQ – Advanced Intranet</title>
+  <title>HQ Dashboard – Advanced Intranet</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -34,19 +34,7 @@
       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .slide-in-from-right { animation: slideInRight 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-    @keyframes slideInRight {
-      from { opacity: 0; transform: translateX(100%); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    .details-content {
-      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-    }
-    .details-content.open { max-height: 100px; opacity: 1; }
-    /* Tooltip-Stil */
+    /* Tooltip Style */
     [data-tooltip]::after {
       content: attr(data-tooltip);
       position: absolute;
@@ -69,24 +57,18 @@
 
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300 initial-fade-in">
 
-  <button id="scrollTopBtn" aria-label="Nach oben scrollen" data-tooltip="Nach oben" class="fixed bottom-6 right-6 z-50 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-110 opacity-0 -translate-y-4">
+  <button id="scrollTopBtn" aria-label="Scroll to top" data-tooltip="Scroll to Top" class="fixed bottom-6 right-6 z-50 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-110 opacity-0 -translate-y-4">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
   </button>
-
-  <aside class="fixed right-4 top-24 w-64 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-xl rounded-xl p-5 text-sm hidden md:block z-30 slide-in-from-right">
-    <h3 class="font-bold text-slate-900 dark:text-white mb-2 flex items-center"><span class="mr-2">💡</span> Tip of the Day</h3>
-    <div id="tip-box" class="text-slate-600 dark:text-slate-300 transition-opacity duration-500">Loading...</div>
-  </aside>
 
   <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-400 text-transparent bg-clip-text">🏢 Noel HQ</h1>
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-400 text-transparent bg-clip-text">🏢 HQ Dashboard</h1>
         <div class="flex items-center space-x-2 sm:space-x-4">
-          <input type="text" id="global-search" placeholder="Team suchen..." class="w-36 md:w-64 p-2 rounded-lg border bg-slate-100 dark:bg-slate-700 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-          
+          <input type="text" id="global-search" placeholder="Search team..." class="w-36 md:w-64 p-2 rounded-lg border bg-slate-100 dark:bg-slate-700 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
           <div class="relative">
-             <button id="notification-btn" aria-label="Benachrichtigungen anzeigen" data-tooltip="Ankündigungen" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"></button>
+             <button id="notification-btn" aria-label="Show notifications" data-tooltip="Announcements" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"></button>
              <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 rounded-lg shadow-xl p-4 border dark:border-slate-700">
                 <p class="font-bold mb-2">📣 Announcements</p>
                 <div class="text-sm text-yellow-800 dark:text-yellow-200 bg-yellow-400/20 p-3 rounded-lg">
@@ -94,118 +76,130 @@
                 </div>
              </div>
           </div>
-          
-          <button id="theme-toggle" aria-label="Dark-Mode umschalten" data-tooltip="Theme wechseln" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"></button>
+          <button id="theme-toggle" aria-label="Toggle dark mode" data-tooltip="Switch Theme" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"></button>
         </div>
       </div>
     </div>
   </header>
 
-  <nav class="bg-white dark:bg-slate-800 shadow-sm py-3 flex gap-4 sm:gap-6 justify-center sticky top-16 z-40">
-    <a href="#welcome" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">👋 Willkommen</a>
-    <a href="#team" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">👥 Team</a>
-    <a href="#performance" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">📈 Performance</a>
-    <a href="#calendar" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">🗓️ Kalender</a>
-  </nav>
+  <main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
 
-  <main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-16">
-
-    <section id="welcome" class="reveal text-center">
-        <h2 class="text-3xl font-bold mb-2">Willkommen zurück, Noel! 👋</h2>
-        <p class="text-slate-600 dark:text-slate-400">Hier ist dein Überblick für heute.</p>
+    <section id="welcome" class="mb-12">
+        <h2 class="text-3xl font-bold mb-1">Welcome back, Noel! 👋</h2>
+        <p class="text-slate-600 dark:text-slate-400">Here is your overview for today.</p>
     </section>
 
-    <section id="team" class="reveal">
-      <h2 class="text-2xl font-bold mb-6">👥 Team Members</h2>
-      <div id="team-grid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <div class="lg:col-span-2 space-y-8">
+            <section id="team" class="reveal">
+              <h3 class="text-2xl font-bold mb-4">👥 Team Directory</h3>
+              <div id="team-grid" class="grid sm:grid-cols-2 gap-6"></div>
+              <div id="no-results" class="hidden text-center py-10 px-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+                <p class="font-semibold">No team members found.</p>
+                <p class="text-sm text-slate-500">Try a different search term.</p>
+              </div>
+            </section>
+            
+            <section id="performance" class="reveal">
+              <h3 class="text-2xl font-bold mb-4">📈 Content Performance</h3>
+              <div class="mb-5 space-x-2">
+                <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="articles">Articles</button>
+                <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="views">Views</button>
+                <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="engagement">Engagement</button>
+              </div>
+              <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg relative min-h-[280px]">
+                <canvas id="chartCanvas"></canvas>
+              </div>
+            </section>
         </div>
-      <div id="no-results" class="hidden text-center py-10 px-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
-        <p class="font-semibold">Keine Team-Mitglieder gefunden.</p>
-        <p class="text-sm text-slate-500">Versuche einen anderen Suchbegriff.</p>
-      </div>
-    </section>
 
-    <section id="performance" class="reveal">
-      <h2 class="text-2xl font-bold mb-6">📈 Content Performance</h2>
-      <div class="mb-5 space-x-2">
-        <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="articles">Artikel</button>
-        <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="views">Views</button>
-        <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="engagement">Engagement</button>
-      </div>
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg relative min-h-[280px]">
-        <canvas id="chartCanvas"></canvas>
-        <div id="chart-loader" class="absolute inset-0 bg-white/50 dark:bg-slate-800/50 flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none">
-            <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      </div>
-    </section>
-    
-    <section id="calendar" class="reveal">
-      <h2 class="text-2xl font-bold mb-6">🗓️ Team Calendar</h2>
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg">
-        <div id="calendar-header" class="flex justify-between mb-4 items-center">
-          <button id="prev-month" aria-label="Vorheriger Monat" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
-          <h3 id="calendar-month" class="text-lg font-semibold text-slate-900 dark:text-white"></h3>
-          <button id="next-month" aria-label="Nächster Monat" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
-        </div>
-        <div class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-slate-500 dark:text-slate-400 mb-2">
-          <div>So</div><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div>
-        </div>
-        <div id="calendar-dates" class="grid grid-cols-7 gap-1 text-center"></div>
-        <div id="event-details" class="mt-4 p-3 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-sm hidden"></div>
-      </div>
-    </section>
+        <div class="space-y-8">
+            <section id="goals" class="reveal">
+                <h3 class="text-2xl font-bold mb-4">🎯 Q3 Company Goals</h3>
+                <div id="goals-container" class="space-y-4 bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg"></div>
+            </section>
 
+            <section id="quick-links" class="reveal">
+                <h3 class="text-2xl font-bold mb-4">🔗 Quick Links</h3>
+                <div id="quick-links-grid" class="grid grid-cols-2 gap-4 bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg"></div>
+            </section>
+            
+            <section id="poll" class="reveal">
+                <h3 class="text-2xl font-bold mb-4">❓ Poll of the Week</h3>
+                <div id="poll-container" class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg"></div>
+            </section>
+
+            <section id="calendar" class="reveal">
+              <h3 class="text-2xl font-bold mb-4">🗓️ Team Calendar</h3>
+              <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg">
+                <div id="calendar-header" class="flex justify-between mb-4 items-center">
+                  <button id="prev-month" aria-label="Previous month" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
+                  <h4 id="calendar-month" class="text-lg font-semibold text-slate-900 dark:text-white"></h4>
+                  <button id="next-month" aria-label="Next month" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
+                </div>
+                <div class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-slate-500 dark:text-slate-400 mb-2">
+                  <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                </div>
+                <div id="calendar-dates" class="grid grid-cols-7 gap-1 text-center"></div>
+                <div id="event-details" class="mt-4 p-3 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-sm hidden"></div>
+              </div>
+            </section>
+        </div>
+    </div>
   </main>
 
   <footer class="text-center text-sm py-8 text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 mt-12">
-    © 2025 Noel HQ. Built for the DEV x Axero Challenge.
+    © 2025 HQ Dashboard. Built for the DEV x Axero Challenge.
   </footer>
   
   <script>
   document.addEventListener("DOMContentLoaded", () => {
     
-    // --- 💡 ICONS ---
-    const icons = {
-      sun: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`,
-      moon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`,
-      bell: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>`,
-      chevronLeft: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`,
-      chevronRight: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>`
+    const ICONS = {
+      sun: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`,
+      moon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`,
+      bell: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>`,
+      chevronLeft: `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`,
+      chevronRight: `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>`
     };
 
-    // --- 🌙 DARK MODE & NOTIFICATIONS ---
-    const themeToggleBtn = document.getElementById("theme-toggle");
-    const notificationBtn = document.getElementById("notification-btn");
-    const notificationDropdown = document.getElementById("notification-dropdown");
-    const docElement = document.documentElement;
-
-    const applyTheme = (theme) => {
-      docElement.classList.toggle('dark', theme === 'dark');
-      themeToggleBtn.innerHTML = theme === 'dark' ? icons.sun : icons.moon;
+    // --- 🌍 GLOBAL HELPERS & SETUP ---
+    const setupTheme = () => {
+        const themeToggleBtn = document.getElementById("theme-toggle");
+        const docElement = document.documentElement;
+        const applyTheme = (theme) => {
+          docElement.classList.toggle('dark', theme === 'dark');
+          themeToggleBtn.innerHTML = theme === 'dark' ? ICONS.sun : ICONS.moon;
+        };
+        themeToggleBtn.addEventListener("click", () => {
+          const newTheme = docElement.classList.contains("dark") ? "light" : "dark";
+          localStorage.setItem("theme", newTheme);
+          applyTheme(newTheme);
+        });
+        applyTheme(localStorage.getItem("theme") || 'light');
     };
-    themeToggleBtn.addEventListener("click", () => {
-      const newTheme = docElement.classList.contains("dark") ? "light" : "dark";
-      localStorage.setItem("theme", newTheme);
-      applyTheme(newTheme);
-    });
     
-    notificationBtn.innerHTML = icons.bell;
-    notificationBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        notificationDropdown.classList.toggle('hidden');
-    });
-    document.addEventListener('click', () => notificationDropdown.classList.add('hidden'));
+    const setupNotifications = () => {
+        const notificationBtn = document.getElementById("notification-btn");
+        const notificationDropdown = document.getElementById("notification-dropdown");
+        notificationBtn.innerHTML = ICONS.bell;
+        notificationBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notificationDropdown.classList.toggle('hidden');
+        });
+        document.addEventListener('click', () => notificationDropdown.classList.add('hidden'));
+    };
 
-    applyTheme(localStorage.getItem("theme") || 'light');
+    setupTheme();
+    setupNotifications();
 
-    // --- 👥 TEAM DATA & LIVE SEARCH ---
+    // --- 👥 TEAM DIRECTORY & SEARCH ---
     const teamData = [
         { name: 'Noel', role: 'Founder & Content Strategist', status: 'online', email: 'noel@example.com', details: 'Leads AI strategy, content optimization & client growth.' },
         { name: 'Sarah', role: 'SEO & AI Integration', status: 'offline', email: 'sarah@example.com', details: 'Handles on-page optimization and keyword strategy.' },
         { name: 'Leo', role: 'Developer Experience', status: 'online', email: 'leo@example.com', details: 'Manages frontend, performance & web accessibility.' },
         { name: 'Maria', role: 'UX/UI Designer', status: 'offline', email: 'maria@example.com', details: 'Creates intuitive and beautiful user interfaces.' },
-        { name: 'David', role: 'Backend Developer', status: 'online', email: 'david@example.com', details: 'Builds robust and scalable server-side applications.' },
     ];
     const teamGrid = document.getElementById('team-grid');
     const searchInput = document.getElementById('global-search');
@@ -213,172 +207,184 @@
 
     const renderTeam = (filter = '') => {
         const filteredData = teamData.filter(member => member.name.toLowerCase().includes(filter.toLowerCase()));
-        teamGrid.innerHTML = ''; // Clear grid
+        teamGrid.innerHTML = '';
+        noResults.classList.toggle('hidden', filteredData.length > 0);
         
-        if (filteredData.length === 0) {
-            noResults.classList.remove('hidden');
-        } else {
-            noResults.classList.add('hidden');
-            filteredData.forEach(member => {
-                const card = document.createElement('div');
-                card.className = 'team-card bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1';
-                card.innerHTML = `
-                    <h3 class="font-bold text-lg text-slate-900 dark:text-white">${member.name} ${member.status === 'online' ? '<span class="text-green-500 text-xs align-middle">● Online</span>' : ''}</h3>
-                    <p class="text-slate-600 dark:text-slate-400">${member.role}</p>
-                    <div class="mt-4 space-x-2">
-                        <a href="mailto:${member.email}" class="contact-btn bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition-colors">📧 Kontakt</a>
-                        <button class="text-blue-600 dark:text-blue-400 text-sm hover:underline toggle-details">ℹ️ Details</button>
-                    </div>
-                    <div class="details-content mt-3 text-sm text-slate-500 dark:text-slate-300">${member.details}</div>
-                `;
-                teamGrid.appendChild(card);
-            });
-        }
+        filteredData.forEach(member => {
+            const card = document.createElement('div');
+            card.className = 'team-card bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1';
+            card.innerHTML = `
+                <h4 class="font-bold text-lg text-slate-900 dark:text-white">${member.name} ${member.status === 'online' ? '<span class="text-green-500 text-xs align-middle">● Online</span>' : ''}</h4>
+                <p class="text-slate-600 dark:text-slate-400 text-sm">${member.role}</p>
+                <div class="mt-4 space-x-2">
+                    <a href="mailto:${member.email}" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition-colors">📧 Contact</a>
+                    <button class="text-blue-600 dark:text-blue-400 text-sm hover:underline toggle-details">ℹ️ Details</button>
+                </div>
+            `;
+            teamGrid.appendChild(card);
+        });
     };
-    
     searchInput.addEventListener('input', (e) => renderTeam(e.target.value));
-    teamGrid.addEventListener('click', (e) => {
-        if (e.target.classList.contains('toggle-details')) {
-            const details = e.target.closest('.team-card').querySelector('.details-content');
-            details.classList.toggle('open');
-        }
-    });
-    renderTeam(); // Initial render
+    renderTeam();
 
-    // --- 📊 CHART.JS & LOADING STATE ---
+    // --- 📊 PERFORMANCE CHART ---
     const chartCtx = document.getElementById('chartCanvas')?.getContext('2d');
-    const chartLoader = document.getElementById('chart-loader');
     if (chartCtx) {
       let currentChart;
       const chartData = {
-        articles: { type: 'bar', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Artikel', data: [4, 6, 8, 5, 10, 12], backgroundColor: '#3b82f6', borderRadius: 4 }] } },
+        articles: { type: 'bar', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Articles', data: [4, 6, 8, 5, 10, 12], backgroundColor: '#3b82f6', borderRadius: 4 }] } },
         views: { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Views', data: [1200, 1800, 2500, 2000, 2900, 3400], borderColor: '#10b981', tension: 0.4, fill: true, backgroundColor: 'rgba(16, 185, 129, 0.1)' }] } },
-        engagement: { type: 'doughnut', data: { labels: ['Gelesen', 'Geklickt', 'Geteilt'], datasets: [{ label: 'Engagement', data: [55, 30, 15], backgroundColor: ['#fbbf24', '#3b82f6', '#ef4444'], borderWidth: 0 }] }, options: { cutout: '70%' }}
+        engagement: { type: 'doughnut', data: { labels: ['Read', 'Clicked', 'Shared'], datasets: [{ label: 'Engagement', data: [55, 30, 15], backgroundColor: ['#fbbf24', '#3b82f6', '#ef4444'], borderWidth: 0 }] }, options: { cutout: '70%' }}
       };
       const chartToggleBtns = document.querySelectorAll(".chart-toggle");
       
       const renderChart = (type) => {
-        chartLoader.style.opacity = '1';
-        setTimeout(() => {
-            if (currentChart) currentChart.destroy();
-            currentChart = new Chart(chartCtx, chartData[type]);
-            chartLoader.style.opacity = '0';
-        }, 400); // Simulate loading
-        
-        chartToggleBtns.forEach(b => {
-            const isSelected = b.dataset.chart === type;
-            b.classList.toggle("bg-blue-600", isSelected);
-            b.classList.toggle("text-white", isSelected);
-            b.classList.toggle("bg-slate-200", !isSelected);
-            b.classList.toggle("dark:bg-slate-700", !isSelected);
-        });
+        if (currentChart) currentChart.destroy();
+        currentChart = new Chart(chartCtx, chartData[type]);
+        chartToggleBtns.forEach(b => b.classList.toggle("bg-blue-600", b.dataset.chart === type) || b.classList.toggle("text-white", b.dataset.chart === type));
       };
       chartToggleBtns.forEach(btn => btn.addEventListener("click", () => renderChart(btn.dataset.chart)));
       renderChart("articles");
     }
 
-    // --- 📅 INTERACTIVE CALENDAR ---
+    // --- 🎯 GOALS (OKRs) WIDGET ---
+    const goalsData = [
+        { title: 'Increase Customer Satisfaction to 95%', progress: 92 },
+        { title: 'Launch New Feature "X"', progress: 75 },
+        { title: 'Reduce Server Costs by 15%', progress: 40 }
+    ];
+    const goalsContainer = document.getElementById('goals-container');
+    goalsData.forEach(goal => {
+        goalsContainer.innerHTML += `
+            <div>
+                <p class="font-semibold text-sm mb-1">${goal.title}</p>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2.5">
+                    <div class="bg-blue-600 h-2.5 rounded-full" style="width: ${goal.progress}%"></div>
+                </div>
+            </div>
+        `;
+    });
+
+    // --- 🔗 QUICK LINKS WIDGET ---
+    const quickLinksData = [
+        { name: 'Time Tracking', url: '#', icon: '⏱️' },
+        { name: 'Vacation Request', url: '#', icon: '🌴' },
+        { name: 'IT Support', url: '#', icon: '💻' },
+        { name: 'Design System', url: '#', icon: '🎨' }
+    ];
+    const quickLinksGrid = document.getElementById('quick-links-grid');
+    quickLinksData.forEach(link => {
+        quickLinksGrid.innerHTML += `
+            <a href="${link.url}" class="p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg flex items-center gap-3 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                <span class="text-xl">${link.icon}</span>
+                <span class="font-medium text-sm">${link.name}</span>
+            </a>
+        `;
+    });
+    
+    // --- ❓ TEAM POLL WIDGET ---
+    let pollData = {
+        question: 'What should be our team lunch theme?',
+        options: [{ text: '🍕 Pizza Party', votes: 8 }, { text: '🌮 Taco Tuesday', votes: 12 }, { text: '🍣 Sushi Day', votes: 5 }],
+        voted: sessionStorage.getItem('teamPollVoted') === 'true'
+    };
+    const pollContainer = document.getElementById('poll-container');
+    
+    const renderPoll = () => {
+        pollContainer.innerHTML = `<p class="font-bold mb-3">${pollData.question}</p>`;
+        const totalVotes = pollData.options.reduce((sum, opt) => sum + opt.votes, 0);
+
+        pollData.options.forEach((option, index) => {
+            if (pollData.voted) { // Show results
+                const percentage = totalVotes > 0 ? ((option.votes / totalVotes) * 100).toFixed(0) : 0;
+                pollContainer.innerHTML += `
+                    <div class="mb-2 text-sm">
+                        <div class="flex justify-between mb-1">
+                            <span>${option.text}</span>
+                            <span>${percentage}%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                            <div class="bg-cyan-500 h-2 rounded-full" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                `;
+            } else { // Show voting options
+                pollContainer.innerHTML += `
+                    <div class="flex items-center mb-2">
+                        <input type="radio" id="poll-opt-${index}" name="poll" value="${index}" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                        <label for="poll-opt-${index}" class="ml-3 block text-sm font-medium">${option.text}</label>
+                    </div>
+                `;
+            }
+        });
+        
+        if (!pollData.voted) {
+            const voteButton = document.createElement('button');
+            voteButton.textContent = 'Submit Vote';
+            voteButton.className = 'mt-3 w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors';
+            voteButton.onclick = () => {
+                const selectedOption = pollContainer.querySelector('input[name="poll"]:checked');
+                if(selectedOption) {
+                    pollData.options[selectedOption.value].votes++;
+                    pollData.voted = true;
+                    sessionStorage.setItem('teamPollVoted', 'true');
+                    renderPoll();
+                }
+            };
+            pollContainer.appendChild(voteButton);
+        }
+    };
+    renderPoll();
+
+    // --- 🗓️ CALENDAR WIDGET ---
     const calendarMonthEl = document.getElementById("calendar-month");
     const calendarDatesEl = document.getElementById("calendar-dates");
     const eventDetailsEl = document.getElementById("event-details");
-    const prevMonthBtn = document.getElementById("prev-month");
-    const nextMonthBtn = document.getElementById("next-month");
+    const events = { '2025-07-25': '🧠 SEO Brainstorm (2pm)', '2025-08-15': '🚀 Project Deadline' };
     
-    // Mock event data: YYYY-MM-DD
-    const events = {
-        '2025-07-25': '🧠 SEO Brainstorm (14:00)',
-        '2025-07-26': '📝 Content Sprint (11:00)',
-        '2025-08-15': '🚀 Project Deadline'
-    };
-
     if (calendarMonthEl) {
-      prevMonthBtn.innerHTML = icons.chevronLeft;
-      nextMonthBtn.innerHTML = icons.chevronRight;
-      
-      const today = new Date();
-      let currentMonth = today.getMonth();
-      let currentYear = today.getFullYear();
-
-      const generateCalendar = (month, year) => {
-        const firstDay = new Date(year, month).getDay();
-        const daysInMonth = new Date(year, month + 1, 0).getDate();
-        calendarMonthEl.textContent = `${new Date(year, month).toLocaleString('de-DE', { month: 'long' })} ${year}`;
-        calendarDatesEl.innerHTML = '';
-        eventDetailsEl.classList.add('hidden');
-
-        for (let i = 0; i < firstDay; i++) calendarDatesEl.innerHTML += `<div></div>`;
-
-        for (let d = 1; d <= daysInMonth; d++) {
-          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-          const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+      document.getElementById("prev-month").innerHTML = ICONS.chevronLeft;
+      document.getElementById("next-month").innerHTML = ICONS.chevronRight;
+      let date = new Date();
+      const renderCalendar = () => {
+        date.setDate(1);
+        const firstDay = date.getDay();
+        const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+        calendarMonthEl.textContent = `${date.toLocaleString('en-US', { month: 'long' })} ${date.getFullYear()}`;
+        calendarDatesEl.innerHTML = Array(firstDay).fill(`<div></div>`).join('');
+        
+        for (let d = 1; d <= lastDay; d++) {
+          const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+          const isToday = d === new Date().getDate() && date.getMonth() === new Date().getMonth();
           const hasEvent = events[dateStr];
-          
-          calendarDatesEl.innerHTML += `
-            <div class="h-9 w-9 flex items-center justify-center rounded-full transition-colors duration-200 cursor-pointer 
-              ${isToday ? 'bg-blue-600 text-white font-bold' : 'hover:bg-slate-200 dark:hover:bg-slate-700'}
-              ${hasEvent ? 'border-2 border-cyan-500' : ''}"
-              data-date="${dateStr}">
-              ${d}
-            </div>`;
+          calendarDatesEl.innerHTML += `<div class="h-9 w-9 flex items-center justify-center rounded-full transition-colors duration-200 cursor-pointer ${isToday ? 'bg-blue-600 text-white font-bold' : 'hover:bg-slate-200 dark:hover:bg-slate-700'} ${hasEvent ? 'border-2 border-cyan-500' : ''}" data-date="${dateStr}">${d}</div>`;
         }
       };
-
+      
+      document.getElementById("prev-month").addEventListener("click", () => { date.setMonth(date.getMonth() - 1); renderCalendar(); });
+      document.getElementById("next-month").addEventListener("click", () => { date.setMonth(date.getMonth() + 1); renderCalendar(); });
       calendarDatesEl.addEventListener('click', (e) => {
-          const target = e.target.closest('[data-date]');
-          if (target && events[target.dataset.date]) {
-              eventDetailsEl.textContent = `Termin: ${events[target.dataset.date]}`;
-              eventDetailsEl.classList.remove('hidden');
-          } else {
-              eventDetailsEl.classList.add('hidden');
-          }
-      });
-
-      prevMonthBtn.addEventListener("click", () => {
-        currentMonth--;
-        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-        generateCalendar(currentMonth, currentYear);
-      });
-      nextMonthBtn.addEventListener("click", () => {
-        currentMonth++;
-        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-        generateCalendar(currentMonth, currentYear);
-      });
-      generateCalendar(currentMonth, currentYear);
-    }
-
-    // --- 💡 DAILY TIP ---
-    const tips = [ "Nutze spezifische Long-Tail-Keywords.", "Interne Verlinkung verbessert die Crawlability.", "Komprimiere Bilder, um die Ladezeit zu verbessern.", "Regelmäßige Content-Erstellung schafft Vertrauen.", "Mobile-First-Design ist keine Option mehr.", "Vergiss nicht, Meta-Beschreibungen zu optimieren!" ];
-    const tipBox = document.getElementById("tip-box");
-    if(tipBox) {
-        const changeTip = () => {
-            tipBox.style.opacity = '0';
-            setTimeout(() => {
-                tipBox.textContent = tips[Math.floor(Math.random() * tips.length)];
-                tipBox.style.opacity = '1';
-            }, 500);
-        };
-        changeTip();
-        setInterval(changeTip, 10000);
-    }
-    
-    // --- 🔝 SCROLL-TO-TOP & REVEAL ---
-    const scrollBtn = document.getElementById("scrollTopBtn");
-    const revealElements = document.querySelectorAll(".reveal");
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          revealObserver.unobserve(entry.target);
+        const target = e.target.closest('[data-date]');
+        if (target && events[target.dataset.date]) {
+          eventDetailsEl.textContent = `Event: ${events[target.dataset.date]}`;
+          eventDetailsEl.classList.remove('hidden');
+        } else {
+          eventDetailsEl.classList.add('hidden');
         }
       });
-    }, { threshold: 0.1 });
+      renderCalendar();
+    }
     
-    window.addEventListener("scroll", () => {
-      scrollBtn.classList.toggle('opacity-100', window.scrollY > 300);
-      scrollBtn.classList.toggle('translate-y-0', window.scrollY > 300);
-    });
+    // --- ✨ SCROLL ANIMATIONS ---
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => entry.isIntersecting && entry.target.classList.add("visible"));
+    }, { threshold: 0.1 });
+    document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
+    
+    // Scroll to Top Button
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    window.addEventListener("scroll", () => scrollBtn.classList.toggle('opacity-100', window.scrollY > 300));
     scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    revealElements.forEach(el => revealObserver.observe(el));
   });
   </script>
 </body>
