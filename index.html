@@ -25,11 +25,20 @@
     </button>
   </header>
 
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-40 bg-white dark:bg-gray-800 shadow px-4 py-3 text-sm flex gap-4 justify-center">
+    <a href="#events" class="hover:underline">📅 Events</a>
+    <a href="#team" class="hover:underline">👥 Team</a>
+    <a href="#performance" class="hover:underline">📈 Performance</a>
+    <a href="#tools" class="hover:underline">🤖 Tools</a>
+    <a href="#news" class="hover:underline">📣 News</a>
+  </nav>
+
   <!-- Main -->
   <main class="max-w-5xl mx-auto py-10 px-4 space-y-12 fade-in">
 
     <!-- Events -->
-    <section>
+    <section id="events">
       <h2 class="text-xl font-semibold mb-4">📅 Upcoming Events</h2>
       <div class="grid md:grid-cols-2 gap-4">
         <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow transform hover:scale-105 transition-transform">
@@ -43,8 +52,8 @@
       </div>
     </section>
 
-    <!-- Team Spotlight -->
-    <section>
+    <!-- Team -->
+    <section id="team">
       <h2 class="text-xl font-semibold mb-4">👥 Team Spotlight</h2>
       <input type="text" id="team-search" placeholder="Search team…" class="w-full mb-4 p-2 rounded border dark:bg-gray-800 dark:border-gray-600">
       <div class="grid sm:grid-cols-2 gap-4" id="team-list">
@@ -67,8 +76,31 @@
       </div>
     </section>
 
+    <!-- Content Performance -->
+    <section id="performance">
+      <h2 class="text-xl font-semibold mb-4">📈 Content Performance</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
+          <p class="text-2xl font-bold">12</p>
+          <p class="text-sm">Articles This Month</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
+          <p class="text-2xl font-bold">8.4k</p>
+          <p class="text-sm">Views</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
+          <p class="text-2xl font-bold">4</p>
+          <p class="text-sm">Team Authors</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
+          <p class="text-2xl font-bold">95%</p>
+          <p class="text-sm">SEO Score</p>
+        </div>
+      </div>
+    </section>
+
     <!-- AI Tools -->
-    <section>
+    <section id="tools">
       <h2 class="text-xl font-semibold mb-4">🤖 AI Tools</h2>
       <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow border dark:border-gray-700">
         <p>Use our internal AI tools to create better content, faster:</p>
@@ -80,7 +112,7 @@
     </section>
 
     <!-- Announcements -->
-    <section>
+    <section id="news">
       <h2 class="text-xl font-semibold mb-4">📣 Announcements</h2>
       <div class="bg-yellow-100 dark:bg-yellow-700 text-yellow-900 dark:text-white p-4 rounded shadow">
         🎉 Curtify 2.0 just launched – now with multilingual content support!
@@ -99,7 +131,7 @@
     © 2025 Noel HQ. Built for the DEV x Axero Challenge.
   </footer>
 
-  <!-- Script: Theme toggle + Live search -->
+  <!-- Script -->
   <script>
     const toggleBtn = document.getElementById("theme-toggle");
     toggleBtn.addEventListener("click", () => {
@@ -121,4 +153,5 @@
   </script>
 </body>
 </html>
+
 
