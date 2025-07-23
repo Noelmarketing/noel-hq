@@ -4,8 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Noel HQ – Intranet Demo</title>
+
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+    }
+  </script>
+
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     body { font-family: 'Inter', sans-serif; }
     .fade-in { animation: fadeIn 1s ease-out; }
@@ -76,10 +89,12 @@
       </div>
     </section>
 
-    <!-- Content Performance -->
+    <!-- Performance -->
     <section id="performance">
       <h2 class="text-xl font-semibold mb-4">📈 Content Performance</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
           <p class="text-2xl font-bold">12</p>
           <p class="text-sm">Articles This Month</p>
@@ -96,6 +111,11 @@
           <p class="text-2xl font-bold">95%</p>
           <p class="text-sm">SEO Score</p>
         </div>
+      </div>
+
+      <!-- Chart -->
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+        <canvas id="articlesChart" height="120"></canvas>
       </div>
     </section>
 
@@ -131,8 +151,9 @@
     © 2025 Noel HQ. Built for the DEV x Axero Challenge.
   </footer>
 
-  <!-- Script -->
+  <!-- Script: Dark Mode + Search + Chart -->
   <script>
+    // Theme toggle
     const toggleBtn = document.getElementById("theme-toggle");
     toggleBtn.addEventListener("click", () => {
       document.documentElement.classList.toggle("dark");
@@ -140,9 +161,9 @@
       toggleBtn.innerText = isDark ? "🌞 Light Theme" : "🌙 Dark Theme";
     });
 
+    // Team search
     const searchInput = document.getElementById("team-search");
     const teamCards = document.querySelectorAll("#team-list > div");
-
     searchInput.addEventListener("input", () => {
       const query = searchInput.value.toLowerCase();
       teamCards.forEach(card => {
@@ -150,8 +171,33 @@
         card.style.display = name.includes(query) ? "block" : "none";
       });
     });
+
+    // Chart.js
+    const ctx = document.getElementById('articlesChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Articles Published',
+          data: [4, 6, 8, 5, 10, 12],
+          backgroundColor: '#3b82f6'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
   </script>
 </body>
 </html>
+
+
 
 
