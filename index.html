@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noel HQ – Intranet Demo</title>
+  <title>Noel HQ – Advanced Intranet</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind CSS + Chart.js -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { darkMode: 'class' }
   </script>
-
-  <!-- Google Font + Chart.js -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     body { font-family: 'Inter', sans-serif; }
@@ -35,10 +33,22 @@
     ⬆ Top
   </button>
 
-  <!-- Header -->
-  <header class="flex items-center justify-between p-6 shadow-md bg-white dark:bg-gray-800">
-    <h1 class="text-2xl font-bold">🏢 Noel HQ</h1>
-    <button id="theme-toggle" class="text-sm border px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+  <!-- Sidebar Daily Tip -->
+  <aside class="fixed right-4 top-32 w-64 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 text-sm hidden md:block z-50">
+    <h3 class="font-semibold mb-2">💡 Tip of the Day</h3>
+    <div id="tip-box">Loading...</div>
+  </aside>
+
+  <!-- Header with Search and Theme Toggle -->
+  <header class="flex flex-col md:flex-row md:items-center md:justify-between p-6 gap-4 bg-white dark:bg-gray-800 shadow-md">
+    <div class="flex items-center justify-between w-full md:w-auto">
+      <h1 class="text-2xl font-bold">🏢 Noel HQ</h1>
+      <button id="theme-toggle" class="md:hidden ml-auto border px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
+        🌙
+      </button>
+    </div>
+    <input type="text" id="global-search" placeholder="Search anything..." class="w-full md:w-1/3 p-2 rounded border dark:bg-gray-900 dark:border-gray-600" />
+    <button id="theme-toggle-desktop" class="hidden md:block border px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-all">
       🌙 Dark Theme
     </button>
   </header>
@@ -48,22 +58,21 @@
     <a href="#events" class="hover:underline">📅 Events</a>
     <a href="#team" class="hover:underline">👥 Team</a>
     <a href="#performance" class="hover:underline">📈 Performance</a>
-    <a href="#hours" class="hover:underline">🕓 Hours</a>
+    <a href="#calendar" class="hover:underline">🗓 Calendar</a>
     <a href="#tools" class="hover:underline">🤖 Tools</a>
     <a href="#news" class="hover:underline">📣 News</a>
   </nav>
 
-  <!-- Main -->
-  <main class="max-w-5xl mx-auto py-10 px-4 space-y-12">
-
-    <!-- Events -->
+  <!-- Begin Main Content -->
+  <main class="max-w-6xl mx-auto py-10 px-4 space-y-12">
+        <!-- Events -->
     <section id="events">
       <h2 class="text-xl font-semibold mb-4">📅 Upcoming Events</h2>
       <div class="grid md:grid-cols-2 gap-4">
-        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow">
+        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow transition hover:scale-105">
           <strong>🧠 SEO Brainstorm</strong><br />July 25, 2pm
         </div>
-        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow">
+        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow transition hover:scale-105">
           <strong>📝 Content Sprint</strong><br />July 26, 11am
         </div>
       </div>
@@ -71,88 +80,94 @@
 
     <!-- Team -->
     <section id="team">
-      <h2 class="text-xl font-semibold mb-4">👥 Team Spotlight</h2>
-      <input type="text" id="team-search" placeholder="Search team…" class="w-full mb-4 p-2 rounded border dark:bg-gray-800 dark:border-gray-600">
-      <div class="grid sm:grid-cols-2 gap-4" id="team-list">
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Noel">
-          <h3 class="font-bold">Noel <span class="text-green-500">● online</span></h3>
+      <h2 class="text-xl font-semibold mb-4">👥 Team Members</h2>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded shadow" data-name="Noel">
+          <h3 class="font-bold text-lg">Noel <span class="text-green-500">● online</span></h3>
           <p>Founder & Content Strategist</p>
+          <div class="mt-3 space-x-2">
+            <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">📧 Contact</button>
+            <button class="text-blue-600 text-sm underline toggle-details">ℹ️ Details</button>
+          </div>
+          <div class="details hidden mt-2 text-sm text-gray-600 dark:text-gray-300">
+            Leads AI strategy, content optimization & client growth.
+          </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Sarah">
-          <h3 class="font-bold">Sarah</h3>
+
+        <div class="bg-white dark:bg-gray-800 p-4 rounded shadow" data-name="Sarah">
+          <h3 class="font-bold text-lg">Sarah</h3>
           <p>SEO & AI Integration</p>
+          <div class="mt-3 space-x-2">
+            <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">📧 Contact</button>
+            <button class="text-blue-600 text-sm underline toggle-details">ℹ️ Details</button>
+          </div>
+          <div class="details hidden mt-2 text-sm text-gray-600 dark:text-gray-300">
+            Handles on-page optimization and keyword strategy using Curtify AI.
+          </div>
         </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Leo">
-          <h3 class="font-bold">Leo <span class="text-green-500">● online</span></h3>
+        
+        <div class="bg-white dark:bg-gray-800 p-4 rounded shadow" data-name="Leo">
+          <h3 class="font-bold text-lg">Leo <span class="text-green-500">● online</span></h3>
           <p>Developer Experience</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Anna">
-          <h3 class="font-bold">Anna</h3>
-          <p>AI Writing Assistant Lead</p>
+          <div class="mt-3 space-x-2">
+            <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700">📧 Contact</button>
+            <button class="text-blue-600 text-sm underline toggle-details">ℹ️ Details</button>
+          </div>
+          <div class="details hidden mt-2 text-sm text-gray-600 dark:text-gray-300">
+            Manages frontend, performance & web accessibility.
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Performance -->
+    <!-- Performance with Toggle -->
     <section id="performance">
       <h2 class="text-xl font-semibold mb-4">📈 Content Performance</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
-          <p class="text-2xl font-bold">12</p>
-          <p class="text-sm">Articles This Month</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
-          <p class="text-2xl font-bold">8.4k</p>
-          <p class="text-sm">Views</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
-          <p class="text-2xl font-bold">4</p>
-          <p class="text-sm">Team Authors</p>
-        </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
-          <p class="text-2xl font-bold">95%</p>
-          <p class="text-sm">SEO Score</p>
-        </div>
+
+      <div class="mb-4 space-x-2">
+        <button class="chart-toggle px-3 py-1 rounded bg-blue-500 text-white" data-chart="articles">Articles</button>
+        <button class="chart-toggle px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 dark:text-white" data-chart="views">Views</button>
+        <button class="chart-toggle px-3 py-1 rounded bg-gray-200 dark:bg-gray-700 dark:text-white" data-chart="engagement">Engagement</button>
       </div>
-      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-        <canvas id="articlesChart" height="120"></canvas>
+
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <canvas id="chartCanvas" height="120"></canvas>
+      </div>
+    </section>
+        <!-- Calendar -->
+    <section id="calendar">
+      <h2 class="text-xl font-semibold mb-4">🗓 Team Calendar</h2>
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow">
+        <div id="calendar-header" class="flex justify-between mb-4 items-center">
+          <button id="prev-month" class="px-2 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded">←</button>
+          <h3 id="calendar-month" class="text-lg font-semibold"></h3>
+          <button id="next-month" class="px-2 py-1 text-sm bg-gray-200 dark:bg-gray-700 rounded">→</button>
+        </div>
+        <div id="calendar-days" class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-gray-500 dark:text-gray-300">
+          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+        </div>
+        <div id="calendar-dates" class="grid grid-cols-7 gap-2 text-center mt-2"></div>
       </div>
     </section>
 
-    <!-- Working Hours -->
-    <section id="hours">
-      <h2 class="text-xl font-semibold mb-4">🕓 Working Hours</h2>
-      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-        <ul class="space-y-1">
-          <li>Mon–Fri: <strong>09:00–17:00</strong></li>
-          <li>Sat–Sun: <span class="text-gray-500">Closed</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Tools -->
+    <!-- AI Tools -->
     <section id="tools">
       <h2 class="text-xl font-semibold mb-4">🤖 AI Tools</h2>
       <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow border dark:border-gray-700">
         <ul class="space-y-1 text-blue-600 underline">
           <li><a href="https://curtify.co" target="_blank">Curtify – AI Blog Generator</a></li>
           <li><a href="https://curtify.co/de/shopify-sections" target="_blank">Shopify Section Builder</a></li>
+          <li><a href="https://www.seobility.net/en/?utm_source=chatgpt&utm_campaign=seocheckgpt" target="_blank">Seobility SEO Suite</a></li>
         </ul>
       </div>
     </section>
 
-    <!-- News -->
+    <!-- News / Announcements -->
     <section id="news">
       <h2 class="text-xl font-semibold mb-4">📣 Announcements</h2>
       <div class="bg-yellow-100 dark:bg-yellow-700 text-yellow-900 dark:text-white p-4 rounded shadow">
         🎉 Curtify 2.0 just launched – with multilingual content support!
       </div>
-    </section>
-
-    <!-- Daily Tip -->
-    <section>
-      <h2 class="text-xl font-semibold mb-4">💡 Daily Tip</h2>
-      <div id="tip-box" class="bg-white dark:bg-gray-800 p-4 rounded shadow text-center text-sm"></div>
     </section>
 
   </main>
@@ -161,65 +176,85 @@
   <footer class="text-center text-sm py-6 text-gray-500 dark:text-gray-400">
     © 2025 Noel HQ. Built for the DEV x Axero Challenge.
   </footer>
-
-  <!-- Script -->
+  <!-- Scripts -->
   <script>
-    // Dark mode toggle
-    const toggleBtn = document.getElementById("theme-toggle");
-    toggleBtn.addEventListener("click", () => {
-      document.documentElement.classList.toggle("dark");
-      const isDark = document.documentElement.classList.contains("dark");
-      toggleBtn.innerText = isDark ? "🌞 Light Theme" : "🌙 Dark Theme";
-      localStorage.setItem("theme", isDark ? "dark" : "light");
+    // 🌙 Dark mode toggle & persistence
+    const toggleBtns = [document.getElementById("theme-toggle"), document.getElementById("theme-toggle-desktop")];
+    toggleBtns.forEach(btn => {
+      if (btn) {
+        btn.addEventListener("click", () => {
+          document.documentElement.classList.toggle("dark");
+          const isDark = document.documentElement.classList.contains("dark");
+          btn.innerText = isDark ? "🌞 Light Theme" : "🌙 Dark Theme";
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+        });
+      }
     });
-    // Load theme
     if (localStorage.getItem("theme") === "dark") {
       document.documentElement.classList.add("dark");
-      toggleBtn.innerText = "🌞 Light Theme";
+      toggleBtns.forEach(btn => btn && (btn.innerText = "🌞 Light Theme"));
     }
 
-    // Team search
-    const searchInput = document.getElementById("team-search");
-    const teamCards = document.querySelectorAll("#team-list > div");
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.toLowerCase();
-      teamCards.forEach(card => {
-        const name = card.dataset.name.toLowerCase();
-        card.style.display = name.includes(query) ? "block" : "none";
+    // 📊 Chart.js toggle
+    const chartCtx = document.getElementById('chartCanvas').getContext('2d');
+    let currentChart;
+    const chartData = {
+      articles: {
+        type: 'bar',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{ label: 'Articles', data: [4, 6, 8, 5, 10, 12], backgroundColor: '#3b82f6' }]
+        }
+      },
+      views: {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+          datasets: [{ label: 'Views', data: [1200, 1800, 2500, 2000, 2900, 3400], borderColor: '#10b981' }]
+        }
+      },
+      engagement: {
+        type: 'doughnut',
+        data: {
+          labels: ['Read', 'Click', 'Share'],
+          datasets: [{ label: 'Engagement', data: [55, 30, 15], backgroundColor: ['#fbbf24', '#3b82f6', '#ef4444'] }]
+        }
+      }
+    };
+    function renderChart(type) {
+      if (currentChart) currentChart.destroy();
+      currentChart = new Chart(chartCtx, chartData[type]);
+    }
+    document.querySelectorAll(".chart-toggle").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".chart-toggle").forEach(b => b.classList.remove("bg-blue-500", "text-white"));
+        btn.classList.add("bg-blue-500", "text-white");
+        renderChart(btn.dataset.chart);
+      });
+    });
+    renderChart("articles");
+
+    // 👤 Team Details Toggle
+    document.querySelectorAll(".toggle-details").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const details = btn.closest("div").querySelector(".details");
+        if (details) details.classList.toggle("hidden");
       });
     });
 
-    // Chart.js
-    new Chart(document.getElementById('articlesChart'), {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [{
-          label: 'Articles',
-          data: [4, 6, 8, 5, 10, 12],
-          backgroundColor: '#3b82f6'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true } }
-      }
-    });
-
-    // Daily Tip Generator
+    // 💡 Daily Tip
     const tips = [
-      "Write with the user in mind – not search engines.",
-      "Shorter meta titles often perform better.",
-      "AI can assist, but human edits win trust.",
-      "Consistency beats perfection in content.",
-      "Use schema markup for local SEO boosts.",
-      "Check your site speed regularly."
+      "Use specific long-tail keywords to target ready-to-convert traffic.",
+      "Internal linking improves crawlability and session time.",
+      "Compress images to boost site speed (and SEO score).",
+      "Consistent content creation builds trust and rankings.",
+      "Mobile-first design isn’t optional anymore.",
+      "Don’t forget to optimize meta descriptions!"
     ];
     const tipBox = document.getElementById("tip-box");
-    tipBox.textContent = tips[Math.floor(Math.random() * tips.length)];
+    if (tipBox) tipBox.textContent = tips[Math.floor(Math.random() * tips.length)];
 
-    // Scroll to top
+    // 🔝 Scroll-to-top
     const scrollBtn = document.getElementById("scrollTopBtn");
     window.addEventListener("scroll", () => {
       scrollBtn.style.display = window.scrollY > 300 ? "block" : "none";
@@ -227,9 +262,55 @@
     scrollBtn.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // 📅 Simple JS Calendar
+    const calendarMonth = document.getElementById("calendar-month");
+    const calendarDates = document.getElementById("calendar-dates");
+    const now = new Date();
+    let currentMonth = now.getMonth();
+    let currentYear = now.getFullYear();
+
+    function generateCalendar(month, year) {
+      const firstDay = new Date(year, month).getDay();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      calendarMonth.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
+      calendarDates.innerHTML = '';
+
+      for (let i = 0; i < firstDay; i++) {
+        calendarDates.innerHTML += `<div></div>`;
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const isToday = d === now.getDate() && month === now.getMonth() && year === now.getFullYear();
+        calendarDates.innerHTML += `<div class="p-2 rounded ${isToday ? 'bg-blue-500 text-white' : 'hover:bg-gray-200 dark:hover:bg-gray-700'} transition">${d}</div>`;
+      }
+    }
+
+    document.getElementById("prev-month").addEventListener("click", () => {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      generateCalendar(currentMonth, currentYear);
+    });
+
+    document.getElementById("next-month").addEventListener("click", () => {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      generateCalendar(currentMonth, currentYear);
+    });
+
+    generateCalendar(currentMonth, currentYear);
   </script>
 </body>
 </html>
+
+
+
 
 
 
