@@ -34,6 +34,19 @@
       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+    /* Added details-content styles from earlier version */
+    .details-content {
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out, margin-top 0.3s ease-in-out;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      margin-top: 0;
+    }
+    .details-content.open {
+      max-height: 100px; /* Adjust if content is taller */
+      opacity: 1;
+      margin-top: 0.75rem; /* mt-3 */
+    }
     /* Tooltip Style */
     [data-tooltip]::after {
       content: attr(data-tooltip);
@@ -213,6 +226,7 @@
         filteredData.forEach(member => {
             const card = document.createElement('div');
             card.className = 'team-card bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1';
+            // **FIX 1/2: Added the details-content div back into the template.**
             card.innerHTML = `
                 <h4 class="font-bold text-lg text-slate-900 dark:text-white">${member.name} ${member.status === 'online' ? '<span class="text-green-500 text-xs align-middle">● Online</span>' : ''}</h4>
                 <p class="text-slate-600 dark:text-slate-400 text-sm">${member.role}</p>
@@ -220,12 +234,23 @@
                     <a href="mailto:${member.email}" class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition-colors">📧 Contact</a>
                     <button class="text-blue-600 dark:text-blue-400 text-sm hover:underline toggle-details">ℹ️ Details</button>
                 </div>
+                <div class="details-content text-sm text-slate-500 dark:text-slate-300">${member.details}</div>
             `;
             teamGrid.appendChild(card);
         });
     };
+
     searchInput.addEventListener('input', (e) => renderTeam(e.target.value));
-    renderTeam();
+    
+    // **FIX 2/2: Added the event listener for the details toggle.**
+    teamGrid.addEventListener('click', (e) => {
+        if (e.target.classList.contains('toggle-details')) {
+            const detailsContent = e.target.closest('.team-card').querySelector('.details-content');
+            detailsContent.classList.toggle('open');
+        }
+    });
+
+    renderTeam(); // Initial render
 
     // --- 📊 PERFORMANCE CHART ---
     const chartCtx = document.getElementById('chartCanvas')?.getContext('2d');
@@ -241,7 +266,11 @@
       const renderChart = (type) => {
         if (currentChart) currentChart.destroy();
         currentChart = new Chart(chartCtx, chartData[type]);
-        chartToggleBtns.forEach(b => b.classList.toggle("bg-blue-600", b.dataset.chart === type) || b.classList.toggle("text-white", b.dataset.chart === type));
+        chartToggleBtns.forEach(b => {
+            const isSelected = b.dataset.chart === type;
+            b.classList.toggle("bg-blue-600", isSelected);
+            b.classList.toggle("text-white", isSelected);
+        });
       };
       chartToggleBtns.forEach(btn => btn.addEventListener("click", () => renderChart(btn.dataset.chart)));
       renderChart("articles");
@@ -375,13 +404,12 @@
       renderCalendar();
     }
     
-    // --- ✨ SCROLL ANIMATIONS ---
+    // --- ✨ SCROLL ANIMATIONS & SCROLL-TO-TOP ---
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => entry.isIntersecting && entry.target.classList.add("visible"));
     }, { threshold: 0.1 });
     document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
     
-    // Scroll to Top Button
     const scrollBtn = document.getElementById("scrollTopBtn");
     window.addEventListener("scroll", () => scrollBtn.classList.toggle('opacity-100', window.scrollY > 300));
     scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }));
