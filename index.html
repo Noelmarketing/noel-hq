@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noel HQ – Intranet Demo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Simple Dark Mode Toggle
+    function toggleTheme() {
+      document.documentElement.classList.toggle("dark");
+    }
+  </script>
+</head>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-white transition-colors">
+
+  <!-- Header -->
+  <header class="flex items-center justify-between p-6 shadow-md bg-white dark:bg-gray-800">
+    <h1 class="text-2xl font-bold">🏢 Noel HQ</h1>
+    <button onclick="toggleTheme()" class="text-sm border px-4 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+      🌓 Toggle Theme
+    </button>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto py-8 px-4 space-y-10">
+
+    <!-- Events Section -->
+    <section>
+      <h2 class="text-xl font-semibold mb-2">📅 Upcoming Events</h2>
+      <ul class="space-y-2">
+        <li class="bg-gray-100 dark:bg-gray-700 p-4 rounded">🧠 SEO Brainstorm – July 25, 2pm</li>
+        <li class="bg-gray-100 dark:bg-gray-700 p-4 rounded">📝 Content Sprint: August Topics – July 26, 11am</li>
+      </ul>
+    </section>
+
+    <!-- Team Spotlight -->
+    <section>
+      <h2 class="text-xl font-semibold mb-2">👥 Team Spotlight</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+          <h3 class="font-bold">Noel</h3>
+          <p>Founder & Content Strategist</p>
+        </div>
+        <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded">
+          <h3 class="font-bold">Sarah</h3>
+          <p>SEO & AI Integration</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Tools Widget -->
+    <section>
+      <h2 class="text-xl font-semibold mb-2">🤖 AI Tools</h2>
+      <div class="bg-white dark:bg-gray-800 p-4 rounded shadow border dark:border-gray-700">
+        <p>Use our internal AI tools to create better content, faster:</p>
+        <ul class="mt-2 space-y-1 text-blue-500 underline">
+          <li><a href="https://curtify.co" target="_blank">Curtify – AI Blog Generator</a></li>
+          <li><a href="https://curtify.co/de/shopify-sections" target="_blank">Section Builder for Shopify</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Announcement Panel -->
+    <section>
+      <h2 class="text-xl font-semibold mb-2">📣 Announcements</h2>
+      <div class="bg-yellow-100 dark:bg-yellow-700 text-yellow-900 dark:text-white p-4 rounded">
+        🎉 Curtify 2.0 just launched – now with multilingual content support!
+      </div>
+    </section>
+
+    <!-- Search Placeholder -->
+    <section>
+      <h2 class="text-xl font-semibold mb-2">🔍 Quick Search</h2>
+      <input
+        type="text"
+        placeholder="Search tools, docs, people..."
+        class="w-full p-3 border rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+      />
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-sm py-6 text-gray-500 dark:text-gray-400">
+    © 2025 Noel HQ. Built for the DEV x Axero Challenge.
+  </footer>
+</body>
+</html>
