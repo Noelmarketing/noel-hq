@@ -12,18 +12,7 @@
       theme: {
         extend: {
           colors: {
-            slate: { // Modernere Farbpalette
-              50: '#f8fafc',
-              100: '#f1f5f9',
-              200: '#e2e8f0',
-              300: '#cbd5e1',
-              400: '#94a3b8',
-              500: '#64748b',
-              600: '#475569',
-              700: '#334155',
-              800: '#1e293b',
-              900: '#0f172a',
-            }
+            slate: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a' }
           }
         }
       }
@@ -34,60 +23,58 @@
 
   <style>
     body { font-family: 'Inter', sans-serif; }
-    
-    /* Sanfter Fade-In für die ganze Seite */
     .initial-fade-in { animation: fadeIn 0.8s ease-in-out; }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
-    /* Scroll-Reveal-Animation */
     .reveal {
       opacity: 0;
       transform: translateY(20px);
       transition: opacity 0.6s ease-out, transform 0.6s ease-out;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Animation für den "Tipp des Tages" */
-    .slide-in-from-right {
-      animation: slideInRight 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .slide-in-from-right { animation: slideInRight 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
     @keyframes slideInRight {
       from { opacity: 0; transform: translateX(100%); }
       to { opacity: 1; transform: translateX(0); }
     }
-    
-    /* Sanftes Aufklappen für Team-Details */
     .details-content {
       transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in-out;
       max-height: 0;
       opacity: 0;
       overflow: hidden;
     }
-    .details-content.open {
-      max-height: 100px; /* Ausreichend Höhe für den Inhalt */
-      opacity: 1;
+    .details-content.open { max-height: 100px; opacity: 1; }
+    /* Tooltip-Stil */
+    [data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 110%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #334155; /* slate-700 */
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s, visibility 0.2s;
     }
+    [data-tooltip]:hover::after { opacity: 1; visibility: visible; }
   </style>
 </head>
 
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300 initial-fade-in">
 
-  <button id="scrollTopBtn" class="fixed bottom-6 right-6 z-50 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-110 opacity-0 -translate-y-4">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-    </svg>
+  <button id="scrollTopBtn" aria-label="Nach oben scrollen" data-tooltip="Nach oben" class="fixed bottom-6 right-6 z-50 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-all duration-300 transform hover:scale-110 opacity-0 -translate-y-4">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
   </button>
 
   <aside class="fixed right-4 top-24 w-64 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm shadow-xl rounded-xl p-5 text-sm hidden md:block z-30 slide-in-from-right">
-    <h3 class="font-bold text-slate-900 dark:text-white mb-2 flex items-center">
-      <span class="mr-2">💡</span> Tip of the Day
-    </h3>
+    <h3 class="font-bold text-slate-900 dark:text-white mb-2 flex items-center"><span class="mr-2">💡</span> Tip of the Day</h3>
     <div id="tip-box" class="text-slate-600 dark:text-slate-300 transition-opacity duration-500">Loading...</div>
   </aside>
 
@@ -95,86 +82,61 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-400 text-transparent bg-clip-text">🏢 Noel HQ</h1>
-        <div class="flex items-center space-x-4">
-          <input type="text" id="global-search" placeholder="Search..." class="w-48 md:w-64 p-2 rounded-lg border bg-slate-100 dark:bg-slate-700 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-          <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-            </button>
+        <div class="flex items-center space-x-2 sm:space-x-4">
+          <input type="text" id="global-search" placeholder="Team suchen..." class="w-36 md:w-64 p-2 rounded-lg border bg-slate-100 dark:bg-slate-700 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
+          
+          <div class="relative">
+             <button id="notification-btn" aria-label="Benachrichtigungen anzeigen" data-tooltip="Ankündigungen" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"></button>
+             <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white dark:bg-slate-800 rounded-lg shadow-xl p-4 border dark:border-slate-700">
+                <p class="font-bold mb-2">📣 Announcements</p>
+                <div class="text-sm text-yellow-800 dark:text-yellow-200 bg-yellow-400/20 p-3 rounded-lg">
+                    🎉 Curtify 2.0 just launched – with multilingual content support!
+                </div>
+             </div>
+          </div>
+          
+          <button id="theme-toggle" aria-label="Dark-Mode umschalten" data-tooltip="Theme wechseln" class="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"></button>
         </div>
       </div>
     </div>
   </header>
 
   <nav class="bg-white dark:bg-slate-800 shadow-sm py-3 flex gap-4 sm:gap-6 justify-center sticky top-16 z-40">
-    <a href="#events" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">📅 Events</a>
+    <a href="#welcome" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">👋 Willkommen</a>
     <a href="#team" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">👥 Team</a>
     <a href="#performance" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">📈 Performance</a>
-    <a href="#calendar" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">🗓️ Calendar</a>
-    <a href="#tools" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">🤖 Tools</a>
-    <a href="#news" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">📣 News</a>
+    <a href="#calendar" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium">🗓️ Kalender</a>
   </nav>
 
   <main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8 space-y-16">
 
-    <section id="events" class="reveal">
-      <h2 class="text-2xl font-bold mb-6">📅 Upcoming Events</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="p-5 rounded-xl bg-blue-500 text-white shadow-lg transition-transform duration-300 hover:-translate-y-1">
-          <strong class="text-lg">🧠 SEO Brainstorm</strong><br /><span class="opacity-80">July 25, 2pm</span>
-        </div>
-        <div class="p-5 rounded-xl bg-cyan-500 text-white shadow-lg transition-transform duration-300 hover:-translate-y-1">
-          <strong class="text-lg">📝 Content Sprint</strong><br /><span class="opacity-80">July 26, 11am</span>
-        </div>
-      </div>
+    <section id="welcome" class="reveal text-center">
+        <h2 class="text-3xl font-bold mb-2">Willkommen zurück, Noel! 👋</h2>
+        <p class="text-slate-600 dark:text-slate-400">Hier ist dein Überblick für heute.</p>
     </section>
 
     <section id="team" class="reveal">
       <h2 class="text-2xl font-bold mb-6">👥 Team Members</h2>
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div class="team-card bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-name="Noel">
-          <h3 class="font-bold text-lg text-slate-900 dark:text-white">Noel <span class="text-green-500 text-xs align-middle">● Online</span></h3>
-          <p class="text-slate-600 dark:text-slate-400">Founder & Content Strategist</p>
-          <div class="mt-4 space-x-2">
-            <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition-colors">📧 Contact</button>
-            <button class="text-blue-600 dark:text-blue-400 text-sm hover:underline toggle-details">ℹ️ Details</button>
-          </div>
-          <div class="details-content mt-3 text-sm text-slate-500 dark:text-slate-300">
-            Leads AI strategy, content optimization & client growth.
-          </div>
+      <div id="team-grid" class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
         </div>
-        <div class="team-card bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-name="Sarah">
-          <h3 class="font-bold text-lg text-slate-900 dark:text-white">Sarah</h3>
-          <p class="text-slate-600 dark:text-slate-400">SEO & AI Integration</p>
-          <div class="mt-4 space-x-2">
-            <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition-colors">📧 Contact</button>
-            <button class="text-blue-600 dark:text-blue-400 text-sm hover:underline toggle-details">ℹ️ Details</button>
-          </div>
-          <div class="details-content mt-3 text-sm text-slate-500 dark:text-slate-300">
-            Handles on-page optimization and keyword strategy using Curtify AI.
-          </div>
-        </div>
-        <div class="team-card bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1" data-name="Leo">
-          <h3 class="font-bold text-lg text-slate-900 dark:text-white">Leo <span class="text-green-500 text-xs align-middle">● Online</span></h3>
-          <p class="text-slate-600 dark:text-slate-400">Developer Experience</p>
-          <div class="mt-4 space-x-2">
-            <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition-colors">📧 Contact</button>
-            <button class="text-blue-600 dark:text-blue-400 text-sm hover:underline toggle-details">ℹ️ Details</button>
-          </div>
-          <div class="details-content mt-3 text-sm text-slate-500 dark:text-slate-300">
-            Manages frontend, performance & web accessibility.
-          </div>
-        </div>
+      <div id="no-results" class="hidden text-center py-10 px-6 bg-white dark:bg-slate-800 rounded-xl shadow-lg">
+        <p class="font-semibold">Keine Team-Mitglieder gefunden.</p>
+        <p class="text-sm text-slate-500">Versuche einen anderen Suchbegriff.</p>
       </div>
     </section>
 
     <section id="performance" class="reveal">
       <h2 class="text-2xl font-bold mb-6">📈 Content Performance</h2>
       <div class="mb-5 space-x-2">
-        <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="articles">Articles</button>
+        <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="articles">Artikel</button>
         <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="views">Views</button>
         <button class="chart-toggle px-4 py-2 rounded-lg transition-colors" data-chart="engagement">Engagement</button>
       </div>
-      <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg">
-        <canvas id="chartCanvas" height="120"></canvas>
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg relative min-h-[280px]">
+        <canvas id="chartCanvas"></canvas>
+        <div id="chart-loader" class="absolute inset-0 bg-white/50 dark:bg-slate-800/50 flex items-center justify-center transition-opacity duration-300 opacity-0 pointer-events-none">
+            <div class="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
       </div>
     </section>
     
@@ -182,42 +144,17 @@
       <h2 class="text-2xl font-bold mb-6">🗓️ Team Calendar</h2>
       <div class="bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg">
         <div id="calendar-header" class="flex justify-between mb-4 items-center">
-          <button id="prev-month" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
+          <button id="prev-month" aria-label="Vorheriger Monat" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
           <h3 id="calendar-month" class="text-lg font-semibold text-slate-900 dark:text-white"></h3>
-          <button id="next-month" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
+          <button id="next-month" aria-label="Nächster Monat" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"></button>
         </div>
         <div class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-slate-500 dark:text-slate-400 mb-2">
-          <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+          <div>So</div><div>Mo</div><div>Di</div><div>Mi</div><div>Do</div><div>Fr</div><div>Sa</div>
         </div>
         <div id="calendar-dates" class="grid grid-cols-7 gap-1 text-center"></div>
+        <div id="event-details" class="mt-4 p-3 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-sm hidden"></div>
       </div>
     </section>
-
-    <div class="grid md:grid-cols-2 gap-8">
-      <section id="tools" class="reveal">
-        <h2 class="text-2xl font-bold mb-6">🤖 AI Tools</h2>
-        <div class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-lg h-full">
-          <ul class="space-y-3">
-            <li><a href="https://curtify.co" target="_blank" class="flex items-center text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors group">
-                <span class="mr-2 transform transition-transform group-hover:translate-x-1">→</span> Curtify – AI Blog Generator</a>
-            </li>
-            <li><a href="https://curtify.co/de/shopify-sections" target="_blank" class="flex items-center text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors group">
-                <span class="mr-2 transform transition-transform group-hover:translate-x-1">→</span> Shopify Section Builder</a>
-            </li>
-            <li><a href="https://www.seobility.net/en/?utm_source=chatgpt&utm_campaign=seocheckgpt" target="_blank" class="flex items-center text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors group">
-                <span class="mr-2 transform transition-transform group-hover:translate-x-1">→</span> Seobility SEO Suite</a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <section id="news" class="reveal">
-        <h2 class="text-2xl font-bold mb-6">📣 Announcements</h2>
-        <div class="bg-yellow-400/20 dark:bg-yellow-500/20 text-yellow-800 dark:text-yellow-200 p-6 rounded-xl shadow-lg h-full flex items-center">
-          <p class="font-medium">🎉 Curtify 2.0 just launched – with multilingual content support!</p>
-        </div>
-      </section>
-    </div>
 
   </main>
 
@@ -232,50 +169,102 @@
     const icons = {
       sun: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>`,
       moon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>`,
+      bell: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>`,
       chevronLeft: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`,
       chevronRight: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>`
     };
 
-    // --- 🌙 DARK MODE TOGGLE ---
+    // --- 🌙 DARK MODE & NOTIFICATIONS ---
     const themeToggleBtn = document.getElementById("theme-toggle");
+    const notificationBtn = document.getElementById("notification-btn");
+    const notificationDropdown = document.getElementById("notification-dropdown");
     const docElement = document.documentElement;
 
     const applyTheme = (theme) => {
-      if (theme === 'dark') {
-        docElement.classList.add('dark');
-        themeToggleBtn.innerHTML = icons.sun;
-      } else {
-        docElement.classList.remove('dark');
-        themeToggleBtn.innerHTML = icons.moon;
-      }
+      docElement.classList.toggle('dark', theme === 'dark');
+      themeToggleBtn.innerHTML = theme === 'dark' ? icons.sun : icons.moon;
     };
-
     themeToggleBtn.addEventListener("click", () => {
-      const isDark = docElement.classList.contains("dark");
-      localStorage.setItem("theme", isDark ? "light" : "dark");
-      applyTheme(isDark ? "light" : "dark");
+      const newTheme = docElement.classList.contains("dark") ? "light" : "dark";
+      localStorage.setItem("theme", newTheme);
+      applyTheme(newTheme);
     });
+    
+    notificationBtn.innerHTML = icons.bell;
+    notificationBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        notificationDropdown.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => notificationDropdown.classList.add('hidden'));
 
     applyTheme(localStorage.getItem("theme") || 'light');
 
+    // --- 👥 TEAM DATA & LIVE SEARCH ---
+    const teamData = [
+        { name: 'Noel', role: 'Founder & Content Strategist', status: 'online', email: 'noel@example.com', details: 'Leads AI strategy, content optimization & client growth.' },
+        { name: 'Sarah', role: 'SEO & AI Integration', status: 'offline', email: 'sarah@example.com', details: 'Handles on-page optimization and keyword strategy.' },
+        { name: 'Leo', role: 'Developer Experience', status: 'online', email: 'leo@example.com', details: 'Manages frontend, performance & web accessibility.' },
+        { name: 'Maria', role: 'UX/UI Designer', status: 'offline', email: 'maria@example.com', details: 'Creates intuitive and beautiful user interfaces.' },
+        { name: 'David', role: 'Backend Developer', status: 'online', email: 'david@example.com', details: 'Builds robust and scalable server-side applications.' },
+    ];
+    const teamGrid = document.getElementById('team-grid');
+    const searchInput = document.getElementById('global-search');
+    const noResults = document.getElementById('no-results');
 
-    // --- 📊 CHART.JS TOGGLE ---
+    const renderTeam = (filter = '') => {
+        const filteredData = teamData.filter(member => member.name.toLowerCase().includes(filter.toLowerCase()));
+        teamGrid.innerHTML = ''; // Clear grid
+        
+        if (filteredData.length === 0) {
+            noResults.classList.remove('hidden');
+        } else {
+            noResults.classList.add('hidden');
+            filteredData.forEach(member => {
+                const card = document.createElement('div');
+                card.className = 'team-card bg-white dark:bg-slate-800 p-5 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1';
+                card.innerHTML = `
+                    <h3 class="font-bold text-lg text-slate-900 dark:text-white">${member.name} ${member.status === 'online' ? '<span class="text-green-500 text-xs align-middle">● Online</span>' : ''}</h3>
+                    <p class="text-slate-600 dark:text-slate-400">${member.role}</p>
+                    <div class="mt-4 space-x-2">
+                        <a href="mailto:${member.email}" class="contact-btn bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm hover:bg-blue-700 transition-colors">📧 Kontakt</a>
+                        <button class="text-blue-600 dark:text-blue-400 text-sm hover:underline toggle-details">ℹ️ Details</button>
+                    </div>
+                    <div class="details-content mt-3 text-sm text-slate-500 dark:text-slate-300">${member.details}</div>
+                `;
+                teamGrid.appendChild(card);
+            });
+        }
+    };
+    
+    searchInput.addEventListener('input', (e) => renderTeam(e.target.value));
+    teamGrid.addEventListener('click', (e) => {
+        if (e.target.classList.contains('toggle-details')) {
+            const details = e.target.closest('.team-card').querySelector('.details-content');
+            details.classList.toggle('open');
+        }
+    });
+    renderTeam(); // Initial render
+
+    // --- 📊 CHART.JS & LOADING STATE ---
     const chartCtx = document.getElementById('chartCanvas')?.getContext('2d');
+    const chartLoader = document.getElementById('chart-loader');
     if (chartCtx) {
       let currentChart;
       const chartData = {
-        articles: { type: 'bar', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Articles', data: [4, 6, 8, 5, 10, 12], backgroundColor: '#3b82f6', borderRadius: 4 }] } },
+        articles: { type: 'bar', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Artikel', data: [4, 6, 8, 5, 10, 12], backgroundColor: '#3b82f6', borderRadius: 4 }] } },
         views: { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Views', data: [1200, 1800, 2500, 2000, 2900, 3400], borderColor: '#10b981', tension: 0.4, fill: true, backgroundColor: 'rgba(16, 185, 129, 0.1)' }] } },
-        engagement: { type: 'doughnut', data: { labels: ['Read', 'Click', 'Share'], datasets: [{ label: 'Engagement', data: [55, 30, 15], backgroundColor: ['#fbbf24', '#3b82f6', '#ef4444'], borderWidth: 0 }] }, options: { cutout: '70%' }}
+        engagement: { type: 'doughnut', data: { labels: ['Gelesen', 'Geklickt', 'Geteilt'], datasets: [{ label: 'Engagement', data: [55, 30, 15], backgroundColor: ['#fbbf24', '#3b82f6', '#ef4444'], borderWidth: 0 }] }, options: { cutout: '70%' }}
       };
-
       const chartToggleBtns = document.querySelectorAll(".chart-toggle");
       
       const renderChart = (type) => {
-        if (currentChart) currentChart.destroy();
-        currentChart = new Chart(chartCtx, chartData[type]);
+        chartLoader.style.opacity = '1';
+        setTimeout(() => {
+            if (currentChart) currentChart.destroy();
+            currentChart = new Chart(chartCtx, chartData[type]);
+            chartLoader.style.opacity = '0';
+        }, 400); // Simulate loading
         
-        // Update button styles
         chartToggleBtns.forEach(b => {
             const isSelected = b.dataset.chart === type;
             b.classList.toggle("bg-blue-600", isSelected);
@@ -284,77 +273,24 @@
             b.classList.toggle("dark:bg-slate-700", !isSelected);
         });
       };
-
       chartToggleBtns.forEach(btn => btn.addEventListener("click", () => renderChart(btn.dataset.chart)));
-      renderChart("articles"); // Initial render
+      renderChart("articles");
     }
 
-
-    // --- 👤 TEAM DETAILS TOGGLE ---
-    document.querySelectorAll(".toggle-details").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const details = btn.closest(".team-card").querySelector(".details-content");
-        details.classList.toggle("open");
-      });
-    });
-
-
-    // --- 💡 DAILY TIP ---
-    const tips = [
-      "Use specific long-tail keywords to target ready-to-convert traffic.",
-      "Internal linking improves crawlability and session time.",
-      "Compress images to boost site speed (and SEO score).",
-      "Consistent content creation builds trust and rankings.",
-      "Mobile-first design isn’t optional anymore.",
-      "Don’t forget to optimize meta descriptions!"
-    ];
-    const tipBox = document.getElementById("tip-box");
-    if(tipBox) {
-        const changeTip = () => {
-            tipBox.style.opacity = '0';
-            setTimeout(() => {
-                tipBox.textContent = tips[Math.floor(Math.random() * tips.length)];
-                tipBox.style.opacity = '1';
-            }, 500);
-        };
-        changeTip(); // Initial tip
-        setInterval(changeTip, 10000); // Change tip every 10 seconds
-    }
-    
-
-    // --- 🔝 SCROLL-TO-TOP BUTTON ---
-    const scrollBtn = document.getElementById("scrollTopBtn");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 300) {
-        scrollBtn.classList.add('opacity-100', 'translate-y-0');
-        scrollBtn.classList.remove('opacity-0', '-translate-y-4');
-      } else {
-        scrollBtn.classList.remove('opacity-100', 'translate-y-0');
-        scrollBtn.classList.add('opacity-0', '-translate-y-4');
-      }
-    });
-    scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-
-    // --- ✨ SCROLL REVEAL ANIMATION ---
-    const revealElements = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target); // Optional: unobserve after revealing
-        }
-      });
-    }, { threshold: 0.1 });
-    revealElements.forEach(el => observer.observe(el));
-
-
-    // --- 📅 SIMPLE JS CALENDAR ---
+    // --- 📅 INTERACTIVE CALENDAR ---
     const calendarMonthEl = document.getElementById("calendar-month");
     const calendarDatesEl = document.getElementById("calendar-dates");
+    const eventDetailsEl = document.getElementById("event-details");
     const prevMonthBtn = document.getElementById("prev-month");
     const nextMonthBtn = document.getElementById("next-month");
     
+    // Mock event data: YYYY-MM-DD
+    const events = {
+        '2025-07-25': '🧠 SEO Brainstorm (14:00)',
+        '2025-07-26': '📝 Content Sprint (11:00)',
+        '2025-08-15': '🚀 Project Deadline'
+    };
+
     if (calendarMonthEl) {
       prevMonthBtn.innerHTML = icons.chevronLeft;
       nextMonthBtn.innerHTML = icons.chevronRight;
@@ -366,37 +302,83 @@
       const generateCalendar = (month, year) => {
         const firstDay = new Date(year, month).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
-        calendarMonthEl.textContent = `${new Date(year, month).toLocaleString('default', { month: 'long' })} ${year}`;
+        calendarMonthEl.textContent = `${new Date(year, month).toLocaleString('de-DE', { month: 'long' })} ${year}`;
         calendarDatesEl.innerHTML = '';
+        eventDetailsEl.classList.add('hidden');
 
-        for (let i = 0; i < firstDay; i++) {
-          calendarDatesEl.innerHTML += `<div></div>`;
-        }
+        for (let i = 0; i < firstDay; i++) calendarDatesEl.innerHTML += `<div></div>`;
 
         for (let d = 1; d <= daysInMonth; d++) {
+          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
           const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
+          const hasEvent = events[dateStr];
+          
           calendarDatesEl.innerHTML += `
             <div class="h-9 w-9 flex items-center justify-center rounded-full transition-colors duration-200 cursor-pointer 
-              ${isToday ? 'bg-blue-600 text-white' : 'hover:bg-slate-200 dark:hover:bg-slate-700'}">
+              ${isToday ? 'bg-blue-600 text-white font-bold' : 'hover:bg-slate-200 dark:hover:bg-slate-700'}
+              ${hasEvent ? 'border-2 border-cyan-500' : ''}"
+              data-date="${dateStr}">
               ${d}
             </div>`;
         }
       };
+
+      calendarDatesEl.addEventListener('click', (e) => {
+          const target = e.target.closest('[data-date]');
+          if (target && events[target.dataset.date]) {
+              eventDetailsEl.textContent = `Termin: ${events[target.dataset.date]}`;
+              eventDetailsEl.classList.remove('hidden');
+          } else {
+              eventDetailsEl.classList.add('hidden');
+          }
+      });
 
       prevMonthBtn.addEventListener("click", () => {
         currentMonth--;
         if (currentMonth < 0) { currentMonth = 11; currentYear--; }
         generateCalendar(currentMonth, currentYear);
       });
-
       nextMonthBtn.addEventListener("click", () => {
         currentMonth++;
         if (currentMonth > 11) { currentMonth = 0; currentYear++; }
         generateCalendar(currentMonth, currentYear);
       });
-      
       generateCalendar(currentMonth, currentYear);
     }
+
+    // --- 💡 DAILY TIP ---
+    const tips = [ "Nutze spezifische Long-Tail-Keywords.", "Interne Verlinkung verbessert die Crawlability.", "Komprimiere Bilder, um die Ladezeit zu verbessern.", "Regelmäßige Content-Erstellung schafft Vertrauen.", "Mobile-First-Design ist keine Option mehr.", "Vergiss nicht, Meta-Beschreibungen zu optimieren!" ];
+    const tipBox = document.getElementById("tip-box");
+    if(tipBox) {
+        const changeTip = () => {
+            tipBox.style.opacity = '0';
+            setTimeout(() => {
+                tipBox.textContent = tips[Math.floor(Math.random() * tips.length)];
+                tipBox.style.opacity = '1';
+            }, 500);
+        };
+        changeTip();
+        setInterval(changeTip, 10000);
+    }
+    
+    // --- 🔝 SCROLL-TO-TOP & REVEAL ---
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    const revealElements = document.querySelectorAll(".reveal");
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    window.addEventListener("scroll", () => {
+      scrollBtn.classList.toggle('opacity-100', window.scrollY > 300);
+      scrollBtn.classList.toggle('translate-y-0', window.scrollY > 300);
+    });
+    scrollBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    revealElements.forEach(el => revealObserver.observe(el));
   });
   </script>
 </body>
