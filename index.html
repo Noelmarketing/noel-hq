@@ -5,18 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Noel HQ – Intranet Demo</title>
 
-  <!-- Tailwind -->
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
+    tailwind.config = { darkMode: 'class' }
   </script>
 
-  <!-- Google Font -->
+  <!-- Google Font + Chart.js -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-
-  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -26,9 +22,18 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    #scrollTopBtn {
+      position: fixed; bottom: 30px; right: 30px;
+      display: none; z-index: 100;
+    }
   </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white transition-colors">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white transition-colors fade-in">
+
+  <!-- Scroll to Top -->
+  <button id="scrollTopBtn" class="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700">
+    ⬆ Top
+  </button>
 
   <!-- Header -->
   <header class="flex items-center justify-between p-6 shadow-md bg-white dark:bg-gray-800">
@@ -43,24 +48,23 @@
     <a href="#events" class="hover:underline">📅 Events</a>
     <a href="#team" class="hover:underline">👥 Team</a>
     <a href="#performance" class="hover:underline">📈 Performance</a>
+    <a href="#hours" class="hover:underline">🕓 Hours</a>
     <a href="#tools" class="hover:underline">🤖 Tools</a>
     <a href="#news" class="hover:underline">📣 News</a>
   </nav>
 
   <!-- Main -->
-  <main class="max-w-5xl mx-auto py-10 px-4 space-y-12 fade-in">
+  <main class="max-w-5xl mx-auto py-10 px-4 space-y-12">
 
     <!-- Events -->
     <section id="events">
       <h2 class="text-xl font-semibold mb-4">📅 Upcoming Events</h2>
       <div class="grid md:grid-cols-2 gap-4">
-        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow transform hover:scale-105 transition-transform">
-          <strong>🧠 SEO Brainstorm</strong><br />
-          <span>July 25, 2pm</span>
+        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow">
+          <strong>🧠 SEO Brainstorm</strong><br />July 25, 2pm
         </div>
-        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow transform hover:scale-105 transition-transform">
-          <strong>📝 Content Sprint</strong><br />
-          <span>July 26, 11am</span>
+        <div class="p-4 rounded-lg bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-white shadow">
+          <strong>📝 Content Sprint</strong><br />July 26, 11am
         </div>
       </div>
     </section>
@@ -70,19 +74,19 @@
       <h2 class="text-xl font-semibold mb-4">👥 Team Spotlight</h2>
       <input type="text" id="team-search" placeholder="Search team…" class="w-full mb-4 p-2 rounded border dark:bg-gray-800 dark:border-gray-600">
       <div class="grid sm:grid-cols-2 gap-4" id="team-list">
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow transform hover:scale-105 transition-transform" data-name="Noel">
-          <h3 class="font-bold">Noel</h3>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Noel">
+          <h3 class="font-bold">Noel <span class="text-green-500">● online</span></h3>
           <p>Founder & Content Strategist</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow transform hover:scale-105 transition-transform" data-name="Sarah">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Sarah">
           <h3 class="font-bold">Sarah</h3>
           <p>SEO & AI Integration</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow transform hover:scale-105 transition-transform" data-name="Leo">
-          <h3 class="font-bold">Leo</h3>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Leo">
+          <h3 class="font-bold">Leo <span class="text-green-500">● online</span></h3>
           <p>Developer Experience</p>
         </div>
-        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow transform hover:scale-105 transition-transform" data-name="Anna">
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow" data-name="Anna">
           <h3 class="font-bold">Anna</h3>
           <p>AI Writing Assistant Lead</p>
         </div>
@@ -92,8 +96,6 @@
     <!-- Performance -->
     <section id="performance">
       <h2 class="text-xl font-semibold mb-4">📈 Content Performance</h2>
-
-      <!-- Stats Grid -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow text-center">
           <p class="text-2xl font-bold">12</p>
@@ -112,38 +114,47 @@
           <p class="text-sm">SEO Score</p>
         </div>
       </div>
-
-      <!-- Chart -->
       <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
         <canvas id="articlesChart" height="120"></canvas>
       </div>
     </section>
 
-    <!-- AI Tools -->
-    <section id="tools">
-      <h2 class="text-xl font-semibold mb-4">🤖 AI Tools</h2>
-      <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow border dark:border-gray-700">
-        <p>Use our internal AI tools to create better content, faster:</p>
-        <ul class="mt-2 space-y-1 text-blue-600 underline">
-          <li><a href="https://curtify.co" target="_blank">Curtify – AI Blog Generator</a></li>
-          <li><a href="https://curtify.co/de/shopify-sections" target="_blank">Section Builder for Shopify</a></li>
+    <!-- Working Hours -->
+    <section id="hours">
+      <h2 class="text-xl font-semibold mb-4">🕓 Working Hours</h2>
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+        <ul class="space-y-1">
+          <li>Mon–Fri: <strong>09:00–17:00</strong></li>
+          <li>Sat–Sun: <span class="text-gray-500">Closed</span></li>
         </ul>
       </div>
     </section>
 
-    <!-- Announcements -->
-    <section id="news">
-      <h2 class="text-xl font-semibold mb-4">📣 Announcements</h2>
-      <div class="bg-yellow-100 dark:bg-yellow-700 text-yellow-900 dark:text-white p-4 rounded shadow">
-        🎉 Curtify 2.0 just launched – now with multilingual content support!
+    <!-- Tools -->
+    <section id="tools">
+      <h2 class="text-xl font-semibold mb-4">🤖 AI Tools</h2>
+      <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow border dark:border-gray-700">
+        <ul class="space-y-1 text-blue-600 underline">
+          <li><a href="https://curtify.co" target="_blank">Curtify – AI Blog Generator</a></li>
+          <li><a href="https://curtify.co/de/shopify-sections" target="_blank">Shopify Section Builder</a></li>
+        </ul>
       </div>
     </section>
 
-    <!-- Quick Search -->
-    <section>
-      <h2 class="text-xl font-semibold mb-4">🔍 Quick Search</h2>
-      <input type="text" placeholder="Search tools, docs, people…" class="w-full p-3 border rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-600 transition-all">
+    <!-- News -->
+    <section id="news">
+      <h2 class="text-xl font-semibold mb-4">📣 Announcements</h2>
+      <div class="bg-yellow-100 dark:bg-yellow-700 text-yellow-900 dark:text-white p-4 rounded shadow">
+        🎉 Curtify 2.0 just launched – with multilingual content support!
+      </div>
     </section>
+
+    <!-- Daily Tip -->
+    <section>
+      <h2 class="text-xl font-semibold mb-4">💡 Daily Tip</h2>
+      <div id="tip-box" class="bg-white dark:bg-gray-800 p-4 rounded shadow text-center text-sm"></div>
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -151,15 +162,21 @@
     © 2025 Noel HQ. Built for the DEV x Axero Challenge.
   </footer>
 
-  <!-- Script: Dark Mode + Search + Chart -->
+  <!-- Script -->
   <script>
-    // Theme toggle
+    // Dark mode toggle
     const toggleBtn = document.getElementById("theme-toggle");
     toggleBtn.addEventListener("click", () => {
       document.documentElement.classList.toggle("dark");
       const isDark = document.documentElement.classList.contains("dark");
       toggleBtn.innerText = isDark ? "🌞 Light Theme" : "🌙 Dark Theme";
+      localStorage.setItem("theme", isDark ? "dark" : "light");
     });
+    // Load theme
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleBtn.innerText = "🌞 Light Theme";
+    }
 
     // Team search
     const searchInput = document.getElementById("team-search");
@@ -173,26 +190,42 @@
     });
 
     // Chart.js
-    const ctx = document.getElementById('articlesChart').getContext('2d');
-    new Chart(ctx, {
+    new Chart(document.getElementById('articlesChart'), {
       type: 'bar',
       data: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
         datasets: [{
-          label: 'Articles Published',
+          label: 'Articles',
           data: [4, 6, 8, 5, 10, 12],
           backgroundColor: '#3b82f6'
         }]
       },
       options: {
         responsive: true,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: { beginAtZero: true }
-        }
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: true } }
       }
+    });
+
+    // Daily Tip Generator
+    const tips = [
+      "Write with the user in mind – not search engines.",
+      "Shorter meta titles often perform better.",
+      "AI can assist, but human edits win trust.",
+      "Consistency beats perfection in content.",
+      "Use schema markup for local SEO boosts.",
+      "Check your site speed regularly."
+    ];
+    const tipBox = document.getElementById("tip-box");
+    tipBox.textContent = tips[Math.floor(Math.random() * tips.length)];
+
+    // Scroll to top
+    const scrollBtn = document.getElementById("scrollTopBtn");
+    window.addEventListener("scroll", () => {
+      scrollBtn.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+    scrollBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   </script>
 </body>
